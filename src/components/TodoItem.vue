@@ -5,7 +5,7 @@
           <button @click="$emit('editThis')">編輯</button>
         </template>
         <template v-else>
-          <input type="text" v-model="editContent">
+          <input type="text" v-model="editContent" v-focus="editContent">
           <button @click="$emit('editComplete',editContent)">完成</button>
         </template>
       </li>

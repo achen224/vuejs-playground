@@ -5,6 +5,14 @@ import store from './store'
 
 Vue.config.productionTip = false
 
+Vue.directive('focus', {
+  inserted: (el, binding, vnode, oldVnode) => {
+    // this => ? 0.window 1.vue
+    // console.log(el, binding, vnode, oldVnode)
+    el.focus()
+  }
+})
+
 new Vue({
   router,
   store,
