@@ -3,7 +3,7 @@
     <h1>This is an todo page</h1>
     <router-link to="/todo" replace>All</router-link>｜
     <router-link to="/todo?filter=active" replace>Active</router-link>｜
-    <router-link :to="{ name: 'Todo', query:{ filter: 'done'} }" replace>Done</router-link>｜
+    <router-link :to="{ name: 'Todo', query:{ filter: 'done'} }" replace>Done</router-link>
     <p>show: {{ filter }}</p>
     <div>{{ list }}</div>
   </div>
@@ -36,3 +36,16 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+
+.todo a{
+  color: black;
+  text-decoration: none;
+}
+.todo .router-link-exact-active{
+  color: green;
+  font-weight: bold;
+}
+
+</style>
