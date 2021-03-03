@@ -74,20 +74,21 @@ export default new Vuex.Store({
         todos
       }
     },
-    UPDATE_TODO ({ commit }, { tId, todo }) {
-    // UPDATE_TODO ({ commit }, { tId, content }) {
+    // UPDATE_TODO ({ commit }, { tId, todo }) {
+    UPDATE_TODO ({ commit, state }, { tId, content }) {
       // 1. PATCH axios.patch()
+      if (state.todos[tId].content === content) return
+      console.log('API')
       const todos = STORE.load()
-      todos.splice(tId, 1, todo)
-      // todos[tId].content = content
+      // todos.splice(tId, 1, todo)
+      todos[tId].content = content
       STORE.save(todos)
       // 2. commit mutation
       commit('SET_TODOS', todos)
       // 3. return
       return {
         tId,
-        todo
-        // todo: todos[tId]
+        todo: todos[tId]
       }
     },
     CHECK_TODO ({ commit }, { tId, done }) {
