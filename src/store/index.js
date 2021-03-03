@@ -8,7 +8,8 @@ const STORE = LocalStorage('todo-vue')
 
 export default new Vuex.Store({
   state: {
-    todos: [{ content: 123, done: false }, { content: 456, done: true }, { content: 789, done: false }]
+    // todos: [{ content: 123, done: false }, { content: 456, done: true }, { content: 789, done: false }]
+    todos: []
   },
   getters: {
     list (state) {
@@ -87,6 +88,21 @@ export default new Vuex.Store({
         tId,
         todo
         // todo: todos[tId]
+      }
+    },
+    CHECK_TODO ({ commit }, { tId, done }) {
+    // UPDATE_TODO ({ commit }, { tId, content }) {
+      // 1. PATCH axios.patch()
+      const todos = STORE.load()
+      todos[tId].done = done
+      // todos[tId].content = content
+      STORE.save(todos)
+      // 2. commit mutation
+      commit('SET_TODOS', todos)
+      // 3. return
+      return {
+        tId,
+        todo: todos[tId]
       }
     },
     DELETE_TODO ({ commit }, { tId }) {
