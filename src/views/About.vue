@@ -1,8 +1,10 @@
 <template>
   <div class="about">
     <h1>This is an about page</h1>
+    <button @click="change(now-1)">Prev</button>
+    <button @click="change(now+1)">Next</button>
     <div class="card-slider">
-      <transition-group class="card-slider-items">
+      <transition-group class="card-slider-items" name="flip-list">
         <div class="card-slider-item" v-for="item in showImages" :key="item.id" :data-id="item.id">
           <img :src="item.src">
         </div>
@@ -22,7 +24,6 @@ export default {
         { id: 3, src: './images/sc/3.jpg' },
         { id: 4, src: './images/sc/4.jpg' },
         { id: 5, src: './images/sc/5.jpg' }
-
       ]
     }
   },
@@ -37,6 +38,7 @@ export default {
           count = Math.floor(ary.length / total)
           for (let i = 0; i < total; i++) {
             ary.push({ id: count + '-' + this.imgs[i].id, src: this.imgs[i].src })
+            console.log(count + '-' + this.imgs[i].id)
           }
         }
       }
@@ -45,6 +47,19 @@ export default {
     showImages () {
       const start = this.now - 4
       return this.allImages.slice(start).concat(this.allImages.slice(0, start))
+    }
+  },
+  methods: {
+    change (index) {
+      const limit = this.allImages.length - 1
+      this.now = index < 0 ? limit : index > limit ? 0 : index
+      // if (index < 0) {
+      //   this.now = limit
+      // } else if (index > limit) {
+      //   this.now = 0
+      // } else {
+      //   this.now = index
+      // }
     }
   }
 }
@@ -63,15 +78,21 @@ export default {
   margin-left: calc(-1 * 25% * 2.5);
 }
 .card-slider-item{
+  z-index: 1;
   flex: calc(25% - 20px) 0 0;
   margin: 10px;
+  background-color: #eee;
+}
+.card-slider-item:first-child,.card-slider-item:last-child{
+  z-index: -1;
+  visibility: hidden;
 }
 
 img{
   width: 100%;
 }
-/* 1. 20%
-  2. 25%
-  3. 30%
-*/
+
+.flip-list-move {
+  transition: transform 0.5s;
+}
 </style>
